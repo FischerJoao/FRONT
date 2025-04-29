@@ -1,9 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { Button } from 'react-native-paper'; // Importando o botão do React Native Paper
-import DadosExibido from './components/Exibe';
-import DadosInsert from './components/Insert';
+import { StatusBar } from "expo-status-bar";
+import { useState, useEffect } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { Button } from "react-native-paper"; // Importando o botão do React Native Paper
+import DadosExibido from "./components/Exibe";
+import DadosInsert from "./components/Insert";
 
 export default function App() {
   const [campos, setDados] = useState([]);
@@ -13,17 +13,17 @@ export default function App() {
   }, []); // <- Esse array vazio faz o useEffect rodar apenas 1x
 
   const fetchData = async () => {
-    let url = 'http://localhost:3000/';
+    let url = "http://localhost:3000/";
 
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
         setDados(json);
       });
-  }
+  };
 
   const Exibir = () => {
-    let url = 'http://localhost:3000/';
+    let url = "http://localhost:3000/";
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
@@ -36,10 +36,13 @@ export default function App() {
     let url = `http://localhost:3000/delete/delete-all`;
     console.log(url);
     fetch(url, {
-      method: 'DELETE',
+      method: "DELETE",
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        console.log(json);
+        fetchData();
+      });
   };
 
   return (
@@ -49,11 +52,7 @@ export default function App() {
         <DadosInsert refetch={fetchData} />
 
         {/* Botões abaixo do Card */}
-        <Button
-          mode="contained"
-          onPress={() => Exibir()}
-          style={styles.button}
-        >
+        <Button mode="contained" onPress={() => Exibir()} style={styles.button}>
           Exibir
         </Button>
 
@@ -67,7 +66,7 @@ export default function App() {
         </Button>
 
         {/* Lista de Dados */}
-        <DadosExibido campos={campos} />
+        <DadosExibido campos={campos} refetch={fetchData} />
 
         <StatusBar style="auto" />
       </ScrollView>
@@ -78,9 +77,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 20,
   },
   button: {
