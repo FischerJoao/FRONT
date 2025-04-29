@@ -9,7 +9,7 @@ export default function App() {
   const [campos, setDados] = useState([]);
 
   useEffect(() => {
-    fetchData();
+    //fetchData();
   }, []); // <- Esse array vazio faz o useEffect rodar apenas 1x
 
   const fetchData = async () => {
