@@ -96,18 +96,6 @@ app.post("/add", async (req, res) => {
     res.status(500).send({ erro: "erro ao adicionar documento" });
   }
 });
-//
-app.put("/put_update/:id", async (req, res) => {
-  const id = req.params.id;
-  const update = req.body;
-
-  const updatedUser = await RefDoc.findByIdAndUpdate(id, update);
-  if (updatedUser) {
-    res.send({ status: "alterado" });
-  } else {
-    res.send({ erro: "erro" });
-  }
-});
 
 // atualizar campos espeficios
 app.patch("/update/:id", async (req, res) => {
