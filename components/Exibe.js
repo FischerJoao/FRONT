@@ -11,7 +11,7 @@ const Delete = (id, refetch) => {
     .then((response) => response.json())
     .then((json) => {
       console.log(json);
-      refetch(); // Atualiza os dados após a exclusão
+      refetch();
     })
     .catch((error) => console.error("Erro ao deletar:", error));
 };

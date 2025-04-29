@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
+const { types } = require("@babel/core");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -41,11 +42,20 @@ mongoose
   });
 //shema
 let Usuario = new mongoose.Schema({
-  name: String,
-  email: String,
-  idade: Number,
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  idade: {
+    type: Number,
+    required: true,
+  },
 });
-
 // criar o model
 const RefDoc = new mongoose.model("Usuarios", Usuario);
 
@@ -82,7 +92,6 @@ app.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// corrigir rota de inserção
 app.post("/add", async (req, res) => {
   console.log(req.body);
   let nome = req.body.name;
@@ -109,15 +118,6 @@ app.patch("/update/:id", async (req, res) => {
   } else {
     res.send({ erro: "erro" });
   }
-
-  //       if (updatedUser.modifiedCount === 0) {
-  //         return res.status(404).send('User not found or no changes made');
-  //       }
-  //       res.status(200).send('User updated successfully');
-  //     } catch (err) {
-  //       res.status(500).send('Error updating user');
-  //     }
-  //   }
 });
 
 app.listen(port, () => {
