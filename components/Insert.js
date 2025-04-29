@@ -1,7 +1,7 @@
 import React from "react";
-import { FlatList, View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { TextInput, Button, Text, Card } from "react-native-paper";
 import { useState } from "react";
-
 
 const DadosInsert = () => {
     const [nome, setNome] = useState(null);
@@ -13,7 +13,7 @@ const DadosInsert = () => {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify({
-                name:  nome,
+                name: nome,
                 email: email,
                 idade: Number(idade),
             }),
@@ -23,50 +23,57 @@ const DadosInsert = () => {
         })
             .then((response) => response.json())
             .then((json) => console.log(json));
-    }
+    };
 
     return (
-        <View style={{ border: '1px solid #000000', margin: 20, padding: 5 }}>
-            <Text>Nome:</Text>
-            <TextInput stye={{
-                height: 40,
-                margin: 12,
-                border: '1px solid #000000',
-                padding: 10,
+        <Card style={styles.card}>
+            <Card.Title title="Cadastrar Usuário" />
+            <Card.Content>
+                <TextInput
+                    label="Nome"
+                    mode="outlined"
+                    value={nome}
+                    onChangeText={(text) => setNome(text)}
+                    style={styles.input}
+                />
+                <TextInput
+                    label="Email"
+                    mode="outlined"
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
+                    style={styles.input}
+                />
+                <TextInput
+                    label="Idade"
+                    mode="outlined"
+                    value={idade}
+                    keyboardType="numeric"
+                    onChangeText={(text) => setIdade(text)}
+                    style={styles.input}
+                />
+                <Button
+                    mode="contained"
+                    onPress={() => Add()}
+                    style={styles.button}
+                >
+                    Cadastrar
+                </Button>
+            </Card.Content>
+        </Card>
+    );
+};
 
-            }}
-                
-                onChangeText={(text)=>setNome(text)}
-
-            />
-            <Text>Email:</Text>
-            <TextInput stye={{
-                height: 40,
-                margin: 12,
-                borderWidth: 1,
-                padding: 10,
-            }}
-                onChangeText={(text)=>setEmail(text)}
-
-            />
-            <Text>Idade:</Text>
-            <TextInput style={{
-                height: 40,
-                margin: 12,
-                borderWidth: 1,
-                padding: 10,
-            }}
-                onChangeText={(text)=>setIdade(text)}
-
-            />
-             <Button
-                title="Cadastrar"
-                onPress={() => {Add()}}
-            />
-        </View>
-    )
-
-}
-
+const styles = StyleSheet.create({
+    card: {
+        margin: 20,
+        padding: 10,
+    },
+    input: {
+        marginBottom: 15,
+    },
+    button: {
+        marginTop: 10,
+    },
+});
 
 export default DadosInsert;

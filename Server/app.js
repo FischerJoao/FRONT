@@ -64,31 +64,45 @@ app.get("/", async (req, res) => {
     res.json(users);
 });
 
-// inserir
+// deletar tudo
+app.delete("/delete/delete-all", async (req, res) => {
+    try {
+        await RefDoc.deleteMany({}); // Deleta todos os documentos da coleção
+        res.send({ status: "todos os documentos foram deletados" });
+    } catch (error) {
+        res.status(500).send({ erro: "erro ao deletar todos os documentos" });
+    }
+});
+
+// deletar por id
+app.delete("/delete/:id", async (req, res) => {
+    let id = req.params.id;
+    try {
+        let i = await RefDoc.findByIdAndDelete(id);
+        if (i) {
+            res.send({ status: "deletado" });
+        } else {
+            res.status(404).send({ erro: "documento não encontrado" });
+        }
+    } catch (error) {
+        res.status(500).send({ erro: "erro ao deletar o documento" });
+    }
+});
+
+// corrigir rota de inserção
 app.post("/add", async (req, res) => {
     console.log(req.body);
     let nome = req.body.name;
     let email = req.body.email;
     let idade = Number(req.body.idade);
-    const I = await new RefDoc({ name: nome , email: email, idade: idade });
-    I.save();
-    res.send(req.body);
-    res.send({ status: "adicionado" });
-});
-
-// deletar
-
-app.delete("/delete/:id", async (req, res) => {
-    let id = req.params.id;
-    let i = await RefDoc.findByIdAndDelete(id);
-    if (i) {
-        res.send({ status: "deletado" });
-    } else {
-        res.send({ erro: 'erro' });
+    try {
+        const I = new RefDoc({ name: nome, email: email, idade: idade });
+        await I.save();
+        res.send({ status: "adicionado", data: req.body });
+    } catch (error) {
+        res.status(500).send({ erro: "erro ao adicionar documento" });
     }
 });
-
-
 // 
 app.put('/put_update/:id', async(req, res)=>{
     const id = req.params.id;
