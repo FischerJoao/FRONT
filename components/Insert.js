@@ -3,10 +3,10 @@ import { View, StyleSheet } from "react-native";
 import { TextInput, Button, Text, Card } from "react-native-paper";
 import { useState } from "react";
 
-const DadosInsert = () => {
-    const [nome, setNome] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [idade, setIdade] = useState(null);
+const DadosInsert = ({refetch}) => {
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [idade, setIdade] = useState("");
 
     const Add = () => {
         let url = 'http://localhost:3000/add/';
@@ -22,7 +22,13 @@ const DadosInsert = () => {
             },
         })
             .then((response) => response.json())
-            .then((json) => console.log(json));
+            .then((json) => {console.log(json)
+                refetch(); // Chama a função de refetch para atualizar os dados
+                setNome(""); // Limpa o campo de nome
+                setEmail(""); // Limpa o campo de email
+                setIdade(""); // Limpa o campo de idade
+            }
+            );
     };
 
     return (

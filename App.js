@@ -9,6 +9,10 @@ export default function App() {
   const [campos, setDados] = useState([]);
 
   useEffect(() => {
+    fetchData();
+  }, []); // <- Esse array vazio faz o useEffect rodar apenas 1x
+
+  const fetchData = async () => {
     let url = 'http://localhost:3000/';
 
     fetch(url)
@@ -16,7 +20,7 @@ export default function App() {
       .then((json) => {
         setDados(json);
       });
-  }, []); // <- Esse array vazio faz o useEffect rodar apenas 1x
+  }
 
   const Exibir = () => {
     let url = 'http://localhost:3000/';
@@ -42,7 +46,7 @@ export default function App() {
     <View style={styles.container}>
       <ScrollView>
         {/* Card de Cadastro no topo */}
-        <DadosInsert />
+        <DadosInsert refetch={fetchData} />
 
         {/* Botões abaixo do Card */}
         <Button
