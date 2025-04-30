@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { Button } from "react-native-paper"; // Importando o botão do React Native Paper
+import { Button } from "react-native-paper";
 import DadosExibido from "./components/Exibe";
 import DadosInsert from "./components/Insert";
 
@@ -60,7 +60,7 @@ export default function App() {
           mode="contained"
           onPress={() => DeleteAll()}
           style={styles.button}
-          buttonColor="#ff4d4d" // Cor de fundo vermelha para o botão de deletar
+          buttonColor="#ff4d4d"
         >
           Deletar Todos
         </Button>
