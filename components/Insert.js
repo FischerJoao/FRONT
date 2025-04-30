@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 10,
+    backgroundColor: "#f0b300", 
   },
 });
 
